@@ -79,29 +79,32 @@ void	ft_print_sudoku(char **argv)
 	free(temp);
 }
 
-int		main(int argc, char *argv[])
+int		main(int argc, char **argv)
 {
 	int i;
 	int j;
 	int flag;
+	int setnumcounter;
 
 	i = 0;
 	flag = 0;
+	setnumcounter = 0;
 	if (argc != 10)
 		flag = 1;
 	while (++i < argc)
 	{
-		j = 0;
-		while (argv[i][j])
+		j = -1;
+		while (argv[i][++j])
 		{
 			if ((argv[i][j] < '1' || argv[i][j] > '9') && argv[i][j] != '.')
 				flag = 1;
-			j++;
+			if (argv[i][j] >= '0' && argv[i][j] <= '9')
+				setnumcounter++;
 		}
 		if (j != 9)
 			flag = 1;
 	}
-	if (flag != 1)
+	if (flag != 1 && setnumcounter > 16)
 		ft_print_sudoku(argv);
 	else
 		ft_putstr("Error", 0, 5);
